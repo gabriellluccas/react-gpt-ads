@@ -1,6 +1,6 @@
 {
     "name": "react-gpt-ads",
-    "version": "1.0.0",
+    "version": "0.1.0-alpha",
     "description": "Gpt library for react",
     "author": "Gabriell lucas",
     "license": "MIT",
@@ -13,7 +13,7 @@
     "scripts": {
         "build": "rollup -c",
         "start": "rollup -c -w",
-        "commit": "gitemoji-cli -c"
+        "commit": "gitmoji -c"
     },
     "devDependencies": {
         "@types/react": "^16.3.13",
@@ -30,8 +30,10 @@
         "dist"
     ],
     "keywords": [
-        "react",
+        "npm",
         "typescript",
-        "npm"
+        "react",
+        "google-publisher-tag",
+        "gpt"
     ]
 }
