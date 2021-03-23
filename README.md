@@ -1,34 +1,70 @@
-# npm-react-typescript-template
+# react-gpt-ads
+A React components for Google Publisher Tag
 
-A template for publishing a React + TypeScript package to npm
+## Requirements
+| Module      | Version     |
+| ----------- | ----------- |
+| React       | 16.8.0      |
+| React DOM   | 16.8.0      |
 
-## How to use
+## Installation
+Install the library using your favorite package manager:
+```js
+    npm install react-gpt-ads
+```
+or using:
+```js
+    yarn add react-gpt-ads
+```
 
-Fork this repo, clone it to your local computer, and edit the `package.json` along with every other required file to match your project.
-Write the code for your package in TypeScript and Sass, compile it, and publish it to [npm](https://npmjs.com).
+## Getting Started
 
-To compile your code once, run
+- First add the gpt script
+```js
+    import { GptScript } from react-gpt-ads
+    <head>
+        <GptScript />
+    </head>
+```
+or using:
+```js
+    <head>
+        <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
+    </head>
+```
 
-- `npm run build`.
+- Add the Gpt component for define ad slot
+```js
+    import { Gpt } from react-gpt-ads
+    
+    <Gpt 
+        adUnit="network-code/ad-unit"
+        name="ad-name"
+        size={[300, 250]}
+    />
+```
 
-To compile your code once and refresh on file change, run
+## Gpt Props
 
-- `npm run start`.
+#### adUnit
+- **type:** string
+- **required:** true
 
-To publish your package to npm, make sure you're logged in the correct account by running
+Ad unit path loaded from google ad manager
 
-- `npm login`.
+#### name
+- **type:** string
+- **required:** true
 
-Compile your package by running
+Name used in id in div
 
-- `npm run build`
+#### size
+- **type:** SingleSize | MultiSize | FluidSize | ResponsiveSize
+- **required:** true
 
-Update the package version accordingly by using
+**SingleSize:** [number, number]
+**MultiSize:** Array<[number, number]>
+**FluidSize:** 'fluid'
+**Responsive:** Array<[ [number, number], Array<[number, number]> ]>
 
-- [`npm version [patch | minor | major]`](https://docs.npmjs.com/about-semantic-versioning)
-
-Then publish your package by running
-
-- `npm publish`
-
-### Happy Building ♡
+Size define if is the single, multi, fluid or responsive size.
