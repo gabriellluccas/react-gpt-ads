@@ -5,14 +5,15 @@ import { networkCode } from '../variables'
 const Gpt: React.FC<GptType> = ({
   adUnit, name, size
 }) => {
-    console.log(`${networkCode.get()}/${adUnit}`)
     let googletag: any
+    let adSlot: any = null
+    
     const displayAd = () => {
       googletag.cmd.push(() => {
-        const adSlot = googletag
+        adSlot = googletag
           .defineSlot(`${networkCode.get()}/${adUnit}`, generateSize(), name)
           .addService(googletag.pubads())
-        mappingSize(adSlot)
+        mappingSize()
         googletag.enableServices()
         googletag.display(name)
       })
@@ -28,7 +29,7 @@ const Gpt: React.FC<GptType> = ({
       }, [])
     }
 
-    const mappingSize = (adSlot: any) => {
+    const mappingSize = () => {
       const internalSize = size as ResponsiveSizeType
       if(!(typeof internalSize === 'object' && typeof internalSize[0][1] === 'object')) return
       let mapping = googletag.sizeMapping()
@@ -46,10 +47,10 @@ const Gpt: React.FC<GptType> = ({
       }
     }, [])
 
-    return(
-      <div id={name}>
+    useEffect( () => () => googletag.destroySlots(adSlot), [] );
 
-      </div>
+    return(
+      <div id={name}></div>
   )}
 
   export { Gpt }
