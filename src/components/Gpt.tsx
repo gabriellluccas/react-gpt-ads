@@ -47,8 +47,12 @@ const Gpt: React.FC<GptType> = ({
       }
     }, [])
 
-    useEffect( () => () => googletag.destroySlots(adSlot), [] );
-
+    useEffect(() => {
+      return () => {
+        googletag.destroySlots([adSlot])
+      }
+    }, []);
+    
     return(
       <div id={name}></div>
   )}
