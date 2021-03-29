@@ -14,3 +14,9 @@ export type GptType = {
   name: string,
   size: GptSizeType,
 }
+
+export type GptConfigType = {
+  enableLazyLoad?: any,
+  eventSlotRequested?: any,
+  eventSlotOnload?: any,
+}
