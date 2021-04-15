@@ -1,7 +1,11 @@
 let internalNetworkCode: string | number = ''
-const networkCode = {
+export const networkCode = {
     get: () => internalNetworkCode,
-    set: (nc: string | number) => {internalNetworkCode = nc}
+    set: (nc: string | number) => internalNetworkCode = nc
 }
 
-export { networkCode }
+let internalRefreshTimer: number | string | null = null
+export const refreshTimer = {
+    get: () => internalRefreshTimer,
+    set: (rt: number | string) => internalRefreshTimer = rt
+}

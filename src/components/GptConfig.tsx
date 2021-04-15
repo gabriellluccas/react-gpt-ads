@@ -1,23 +1,57 @@
 import React, { useEffect } from 'react'
+import * as variables from '../variables'
 import { GptConfigType } from '../types'
+import { pushAdSlotToRefresh, refreshViewPercentage, impressionViewable } from '../refresh'
 export const GptConfig: React.FC<GptConfigType> = ({
-    enableLazyLoad, eventSlotOnload, eventSlotRequested
-}) => {  
+    networkCode, refreshTimer = 0, target, enableLazyLoad, collapseEmptyDivs, eventImpressionViewable, eventSlotOnload, eventSlotRenderEnded, eventSlotRequested, eventSlotResponseReceived, eventSlotVisibilityChanged
+}) => {
     let googletag: any
     
-    const configs = () => {
-      googletag.cmd.push(() => {
-        console.log('pubads', googletag.pubads())
-        if(enableLazyLoad) googletag.pubads().enableLazyLoad(enableLazyLoad)
-        if(eventSlotRequested) googletag.pubads().addEventListener('slotRequested', eventSlotRequested)
-        if(eventSlotOnload) googletag.pubads().addEventListener('slotOnload', eventSlotOnload)
+    const setConfigs = () => {
+      variables.networkCode.set(networkCode)
+      variables.refreshTimer.set(refreshTimer)
+      if(enableLazyLoad) googletag.pubads().enableLazyLoad(enableLazyLoad)
+      if(collapseEmptyDivs) googletag.pubads().collapseEmptyDivs(true)
+    }
+
+    const setTargeting = () => {
+      target.forEach((el) => 
+        googletag.pubads().setTargeting(el[0], el[1])
+      )
+    }
+
+    const setEvents = () => {
+      googletag.pubads().addEventListener('slotOnload',  (event: any) => {
+        if(eventSlotOnload) eventSlotOnload(event)
+        if(refreshTimer) pushAdSlotToRefresh(event.slot, googletag, Number(refreshTimer))
       })
+
+      googletag.pubads().addEventListener('slotVisibilityChanged', (event: any) => { 
+        if(eventSlotVisibilityChanged) eventSlotVisibilityChanged(event)
+        if(refreshTimer) refreshViewPercentage(event)
+      })
+
+      googletag.pubads().addEventListener('impressionViewable', (event: any) => {
+        if(eventImpressionViewable) eventImpressionViewable(event)  
+        if(refreshTimer) impressionViewable(event)
+      })
+
+      if(eventSlotRenderEnded) googletag.pubads().addEventListener('slotRenderEnded', eventSlotRenderEnded)
+      if(eventSlotRequested) googletag.pubads().addEventListener('slotRequested', eventSlotRequested)
+      if(eventSlotResponseReceived) googletag.pubads().addEventListener('slotResponseReceived', eventSlotResponseReceived)
     }
 
     useEffect(() => {
         if(window.googletag) {
           googletag = window.googletag
-          if(googletag.apiReady) configs()
+          if(googletag.apiReady) {
+            googletag.cmd.push(() => {              
+              setConfigs()
+              setEvents()
+              setTargeting()
+              googletag.enableServices()
+            })
+          }
         }
       }, [])
 

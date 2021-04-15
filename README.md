@@ -38,7 +38,7 @@ or using:
     import { Gpt } from react-gpt-ads
     
     <Gpt 
-        adUnit="network-code/ad-unit"
+        adUnit="ad-unit"
         name="ad-name"
         size={[300, 250]}
     />
@@ -50,13 +50,13 @@ or using:
 - **type:** string
 - **required:** true
 
-Ad unit path loaded from google ad manager
+Ad unit path loaded from google ad manager.
 
 #### name
 - **type:** string
 - **required:** true
 
-Name used in id in div
+Name used in div id
 
 #### size
 - **type:** SingleSize | MultiSize | FluidSize | ResponsiveSize
@@ -67,4 +67,54 @@ Name used in id in div
 **FluidSize:** 'fluid'
 **Responsive:** Array<[ [number, number], Array<[number, number]> ]>
 
-Size define if is the single, multi, fluid or responsive size.
+Size is defined by single, multi, fluid or responsive.
+
+## GptConfig Props
+#### networkCode
+- **type:** number | string
+- **required:** true
+
+Is a unique identifier for the Ad Manager network the ad unit belongs to.
+
+#### refreshTimer
+- **type:** number | string
+- **required:** false
+
+The refreshTimer prop defines how often ads are updated. It activates a function where the ads are updated in a loop and while displayed on the screen.
+
+#### collapseEmptyDivs
+- **type:** boolean
+- **default:** false
+
+Enables collapsing of slot divs if have ad content to display. If true the div collapse mode will be enable and if false the slot div won't collapse.
+
+#### eventSlotOnload
+- **type:** callback(event)
+- **required:** false
+
+This event is fired when the ad is displayed. When rendering ads in sync rendering mode SlotOnloadEvent won't be fired.
+
+
+#### eventSlotVisibilityChanged
+- **type:** callback(event)
+- **required:** false
+
+This event is fired whenever the on-screen percentage of an ad slot's area changes.
+
+#### eventSlotRenderEnded
+- **type:** callback(event)
+- **required:** false
+
+This event is fired when the ad unit is injected into a slot. This event will occur before the ad are fetched, so the ad may not be visible yet.
+
+#### eventSlotRequested
+- **type:** callback(event)
+- **required:** false
+
+This event is fired when an ad has been requested for a particular slot.
+
+#### eventSlotResponseReceived
+- **type:** callback(event)
+- **required:** false
+  
+This event is fired when an ad response has been received for a particular slot.
