@@ -3,7 +3,7 @@ import { GptType, ResponsiveSizeType } from '../types'
 import { networkCode } from '../variables'
 
 const Gpt: React.FC<GptType> = ({
-  adUnit, name, size
+  adUnit, name, size, target,
 }) => {
     let googletag: any
     let adSlot: any = null
@@ -17,6 +17,12 @@ const Gpt: React.FC<GptType> = ({
         googletag.enableServices()
         googletag.display(name)
       })
+    }
+
+    const setTargeting = () => {
+      target.forEach((el) => 
+        googletag.pubads().setTargeting(el[0], el[1])
+      )
     }
 
     const generateSize = () => {
@@ -43,7 +49,12 @@ const Gpt: React.FC<GptType> = ({
     useEffect(() => {
       if(window.googletag && !googletag) {
         googletag = window.googletag
-        displayAd()
+        if(googletag.apiReady) {
+          displayAd()
+          googletag.cmd.push(() => {              
+            setTargeting()
+          })
+        }
       }
     }, [])
 

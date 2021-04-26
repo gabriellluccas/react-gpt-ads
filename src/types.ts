@@ -16,6 +16,7 @@ export type GptType = {
   adUnit: string,
   name: string,
   size: GptSizeType,
+  target?: TargetArrayType,
 }
 
 export type GptConfigType = {

@@ -69,12 +69,25 @@ Name used in div id
 
 Size is defined by single, multi, fluid or responsive.
 
+#### target
+- **type:** Array<[string, string | Array\<string>]>
+- **required:** false
+
+Configure targets in slot-level
+
+
 ## GptConfig Props
 #### networkCode
 - **type:** number | string
 - **required:** true
 
 Is a unique identifier for the Ad Manager network the ad unit belongs to.
+
+#### target
+- **type:** Array<[string, string | Array\<string>]>
+- **required:** false
+
+Configure targets in page-level
 
 #### refreshTimer
 - **type:** number | string
