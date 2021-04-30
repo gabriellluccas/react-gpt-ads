@@ -17,7 +17,7 @@ const adFactory = (adSlot: any, googletag: any, refreshTimer: number) => {
     }
     const loop: any = () => {
         isLoopRun = true
-        if(isRefreshable && (isImpressionViewable || viewPercentage > 50)) {
+        if(isRefreshable && isImpressionViewable && viewPercentage > 50) {
             internalGoogletag.pubads().refresh([adSlot])
             isRefreshable = false
             isImpressionViewable = false
