@@ -3,7 +3,7 @@ import { GptType, ResponsiveSizeType } from '../types'
 import { networkCode } from '../variables'
 
 const Gpt: React.FC<GptType> = ({
-  adUnit, name, size, target,
+  adUnit, name, size, target = [],
 }) => {
     let googletag: any
     let adSlot: any = null

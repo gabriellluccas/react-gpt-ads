@@ -3,7 +3,7 @@ import * as variables from '../variables'
 import { GptConfigType } from '../types'
 import { pushAdSlotToRefresh, refreshViewPercentage, impressionViewable } from '../refresh'
 export const GptConfig: React.FC<GptConfigType> = ({
-    networkCode, refreshTimer = 0, target, enableLazyLoad, collapseEmptyDivs, eventImpressionViewable, eventSlotOnload, eventSlotRenderEnded, eventSlotRequested, eventSlotResponseReceived, eventSlotVisibilityChanged
+    networkCode, refreshTimer = 0, target = [], enableLazyLoad, collapseEmptyDivs, eventImpressionViewable, eventSlotOnload, eventSlotRenderEnded, eventSlotRequested, eventSlotResponseReceived, eventSlotVisibilityChanged
 }) => {
     let googletag: any
     
