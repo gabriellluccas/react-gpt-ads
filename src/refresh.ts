@@ -16,21 +16,23 @@ const adFactory = (adSlot: any, googletag: any, refreshTimer: number) => {
         isImpressionViewable = true
     }
     const loop: any = () => {
-        isLoopRun = true
-        if(isRefreshable && isImpressionViewable && viewPercentage > 50) {
-            internalGoogletag.pubads().refresh([adSlot])
-            isRefreshable = false
-            isImpressionViewable = false
-        }
-        setTimeout(() => {
-            if(isImpressionViewable && viewPercentage > 50) {
+        if(isImpressionViewable && viewPercentage > 50) {
+            isLoopRun = true
+            if(isRefreshable) {
                 internalGoogletag.pubads().refresh([adSlot])
+                isRefreshable = false
+                isImpressionViewable = false
             }
-            else {
-                isRefreshable = true
-            }
-            isLoopRun = false
-        }, internalRefreshTimer)
+            setTimeout(() => {
+                if(isImpressionViewable && viewPercentage > 50) {
+                    internalGoogletag.pubads().refresh([adSlot])
+                }
+                else {
+                    isRefreshable = true
+                }
+                isLoopRun = false
+            }, internalRefreshTimer)
+        }
     }
 
 
