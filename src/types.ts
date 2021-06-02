@@ -20,7 +20,7 @@ export type GptType = {
 }
 
 export type GptConfigType = {
-  networkCode: number | string,
+  networkCode?: number | string,
   refreshTimer?: number | string,
   target?: TargetArrayType,
   enableLazyLoad?: any,

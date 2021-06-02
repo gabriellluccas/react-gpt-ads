@@ -3,13 +3,13 @@ import * as variables from '../variables'
 import { GptConfigType } from '../types'
 import { pushAdSlotToRefresh, refreshViewPercentage, impressionViewable } from '../refresh'
 export const GptConfig: React.FC<GptConfigType> = ({
-    networkCode, refreshTimer = 0, target = [], enableLazyLoad, collapseEmptyDivs, eventImpressionViewable, eventSlotOnload, eventSlotRenderEnded, eventSlotRequested, eventSlotResponseReceived, eventSlotVisibilityChanged
+    networkCode, refreshTimer, target = [], enableLazyLoad, collapseEmptyDivs, eventImpressionViewable, eventSlotOnload, eventSlotRenderEnded, eventSlotRequested, eventSlotResponseReceived, eventSlotVisibilityChanged
 }) => {
     let googletag: any
     
     const setConfigs = () => {
-      variables.networkCode.set(networkCode)
-      variables.refreshTimer.set(refreshTimer)
+      if(networkCode) variables.networkCode.set(networkCode)
+      if(refreshTimer) variables.refreshTimer.set(refreshTimer)
       if(enableLazyLoad) googletag.pubads().enableLazyLoad(enableLazyLoad)
       if(collapseEmptyDivs) googletag.pubads().collapseEmptyDivs(true)
     }
@@ -44,14 +44,12 @@ export const GptConfig: React.FC<GptConfigType> = ({
     useEffect(() => {
         if(window.googletag) {
           googletag = window.googletag
-          if(googletag.apiReady) {
-            googletag.cmd.push(() => {              
-              setConfigs()
-              setEvents()
-              setTargeting()
-              googletag.enableServices()
-            })
-          }
+          googletag.cmd.push(() => {             
+            setConfigs()
+            setEvents()
+            setTargeting()
+            googletag.enableServices()
+          })
         }
       }, [])
 
