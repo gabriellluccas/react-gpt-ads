@@ -5,7 +5,7 @@ declare global {
 export type SizeType = [number, number]
 export type SingleSizeType = SizeType
 export type MultiSizeType = SizeType[]
-export type FluidSizeType = 'fluid'
+export type FluidSizeType = "fluid"
 export type ResponsiveSizeType = [SizeType, SizeType[] | SizeType][]
 export type GptSizeType = SingleSizeType | MultiSizeType | FluidSizeType | ResponsiveSizeType 
 
@@ -24,7 +24,7 @@ export type GptConfigType = {
   refreshTimer?: number | string,
   target?: TargetArrayType,
   enableLazyLoad?: any,
-  collapseEmptyDivs?:  boolean | 'true'| 'expanded' | 'collapse', 
+  collapseEmptyDivs?:  boolean | "true"| "expanded" | "collapse", 
   eventImpressionViewable?: any,
   eventSlotOnload?: any,
   eventSlotRenderEnded?: any,

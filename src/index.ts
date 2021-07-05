@@ -1,1 +1,1 @@
-export { Gpt, GptScript, GptConfig } from './components'
+export { Gpt, GptScript, GptConfig } from "./components"
