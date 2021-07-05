@@ -47,14 +47,13 @@ const Gpt: React.FC<GptType> = ({
     }
 
     useEffect(() => {
-      if(window.googletag && !googletag) {
-        googletag = window.googletag
-        if(googletag.apiReady) {
-          displayAd()
-          googletag.cmd.push(() => {              
-            setTargeting()
-          })
-        }
+      window.googletag = window.googletag || {cmd: []}
+      googletag = window.googletag
+      if(googletag.apiReady) {
+        displayAd()
+        googletag.cmd.push(() => {              
+          setTargeting()
+        })
       }
     }, [])
 

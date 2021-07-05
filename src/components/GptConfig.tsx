@@ -42,7 +42,7 @@ export const GptConfig: React.FC<GptConfigType> = ({
     }
 
     useEffect(() => {
-        if(window.googletag) {
+          window.googletag = window.googletag || {cmd: []}
           googletag = window.googletag
           googletag.cmd.push(() => {             
             setConfigs()
@@ -50,7 +50,6 @@ export const GptConfig: React.FC<GptConfigType> = ({
             setTargeting()
             googletag.enableServices()
           })
-        }
       }, [])
 
     return null
