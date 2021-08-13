@@ -14,16 +14,18 @@ export type TargetArrayType = TargetType[]
 
 export type GptType = {
   adUnit: string,
-  name: string,
-  size: GptSizeType,
+  name?: string,
+  size?: GptSizeType,
   target?: TargetArrayType,
+  type?: "INTERSTITIAL" | "TOP_ANCHOR" | "BOTTOM_ANCHOR"
 }
 
 export type GptConfigType = {
   networkCode?: number | string,
   refreshTimer?: number | string,
   target?: TargetArrayType,
-  enableLazyLoad?: any,
+  enableLazyLoad?: boolean | "true",
+  enableSingleRequest?: boolean | "true",
   collapseEmptyDivs?:  boolean | "true"| "expanded" | "collapse", 
   eventImpressionViewable?: any,
   eventSlotOnload?: any,

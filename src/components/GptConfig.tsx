@@ -1,56 +1,57 @@
-import React, { useEffect } from 'react'
-import * as variables from '../variables'
-import { GptConfigType } from '../types'
-import { pushAdSlotToRefresh, refreshViewPercentage, impressionViewable } from '../refresh'
+import React, { useEffect } from "react"
+import * as variables from "../variables"
+import { GptConfigType } from "../types"
+import { pushAdSlotToRefresh, refreshViewPercentage, impressionViewable } from "../refresh"
 export const GptConfig: React.FC<GptConfigType> = ({
-    networkCode, refreshTimer, target = [], enableLazyLoad, collapseEmptyDivs, eventImpressionViewable, eventSlotOnload, eventSlotRenderEnded, eventSlotRequested, eventSlotResponseReceived, eventSlotVisibilityChanged
+	networkCode, refreshTimer, target = [], enableLazyLoad, enableSingleRequest, collapseEmptyDivs, eventImpressionViewable, eventSlotOnload, eventSlotRenderEnded, eventSlotRequested, eventSlotResponseReceived, eventSlotVisibilityChanged
 }) => {
-    let googletag: any
+	let googletag: any
     
-    const setConfigs = () => {
-      if(networkCode) variables.networkCode.set(networkCode)
-      if(refreshTimer) variables.refreshTimer.set(refreshTimer)
-      if(enableLazyLoad) googletag.pubads().enableLazyLoad(enableLazyLoad)
-      if(collapseEmptyDivs) googletag.pubads().collapseEmptyDivs(true)
-    }
+	const setConfigs = () => {
+		if(networkCode) variables.networkCode.set(networkCode)
+		if(refreshTimer) variables.refreshTimer.set(refreshTimer)
+		if(enableLazyLoad) googletag.pubads().enableLazyLoad(enableLazyLoad)
+		if(collapseEmptyDivs) googletag.pubads().collapseEmptyDivs(true)
+		if(enableSingleRequest) googletag.pubads().enableSingleRequest()
+	}
 
-    const setTargeting = () => {
-      target.forEach((el) => 
-        googletag.pubads().setTargeting(el[0], el[1])
-      )
-    }
+	const setTargeting = () => {
+		target.forEach((el) => 
+			googletag.pubads().setTargeting(el[0], el[1])
+		)
+	}
 
-    const setEvents = () => {
-      googletag.pubads().addEventListener('slotOnload',  (event: any) => {
-        if(eventSlotOnload) eventSlotOnload(event)
-        if(refreshTimer) pushAdSlotToRefresh(event.slot, googletag, Number(refreshTimer))
-      })
+	const setEvents = () => {
+		googletag.pubads().addEventListener("slotOnload",  (event: any) => {
+			if(eventSlotOnload) eventSlotOnload(event)
+			if(refreshTimer) pushAdSlotToRefresh(event.slot, googletag, Number(refreshTimer))
+		})
 
-      googletag.pubads().addEventListener('slotVisibilityChanged', (event: any) => { 
-        if(eventSlotVisibilityChanged) eventSlotVisibilityChanged(event)
-        if(refreshTimer) refreshViewPercentage(event)
-      })
+		googletag.pubads().addEventListener("slotVisibilityChanged", (event: any) => { 
+			if(eventSlotVisibilityChanged) eventSlotVisibilityChanged(event)
+			if(refreshTimer) refreshViewPercentage(event)
+		})
 
-      googletag.pubads().addEventListener('impressionViewable', (event: any) => {
-        if(eventImpressionViewable) eventImpressionViewable(event)  
-        if(refreshTimer) impressionViewable(event)
-      })
+		googletag.pubads().addEventListener("impressionViewable", (event: any) => {
+			if(eventImpressionViewable) eventImpressionViewable(event)  
+			if(refreshTimer) impressionViewable(event)
+		})
 
-      if(eventSlotRenderEnded) googletag.pubads().addEventListener('slotRenderEnded', eventSlotRenderEnded)
-      if(eventSlotRequested) googletag.pubads().addEventListener('slotRequested', eventSlotRequested)
-      if(eventSlotResponseReceived) googletag.pubads().addEventListener('slotResponseReceived', eventSlotResponseReceived)
-    }
+		if(eventSlotRenderEnded) googletag.pubads().addEventListener("slotRenderEnded", eventSlotRenderEnded)
+		if(eventSlotRequested) googletag.pubads().addEventListener("slotRequested", eventSlotRequested)
+		if(eventSlotResponseReceived) googletag.pubads().addEventListener("slotResponseReceived", eventSlotResponseReceived)
+	}
 
-    useEffect(() => {
-          window.googletag = window.googletag || {cmd: []}
-          googletag = window.googletag
-          googletag.cmd.push(() => {             
-            setConfigs()
-            setEvents()
-            setTargeting()
-            googletag.enableServices()
-          })
-      }, [])
+	useEffect(() => {
+		window.googletag = window.googletag || {cmd: []}
+		googletag = window.googletag
+		googletag.cmd.push(() => {             
+			setConfigs()
+			setEvents()
+			setTargeting()
+			googletag.enableServices()
+		})
+	}, [])
 
-    return null
+	return null
 }
