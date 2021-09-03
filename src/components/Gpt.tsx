@@ -20,14 +20,12 @@ const Gpt: React.FC<GptType> = ({ adUnit, name, target = [], type, size}) => {
 	}
 
 	const displayEspecialAd = () => {
-		console.log("Anuncio Não iniciado")
 		googletag.cmd.push(() => {
 			adSlot = googletag.defineOutOfPageSlot(
 				`${networkCode.get()}/${adUnit}`, 
 				googletag.enums.OutOfPageFormat[type]
 			)
 			if(!adSlot) return 
-			console.log("Anuncio Carregando")
 			setTargeting()
 			adSlot.addService(googletag.pubads())
 		})
@@ -63,12 +61,10 @@ const Gpt: React.FC<GptType> = ({ adUnit, name, target = [], type, size}) => {
 	useEffect(() => {
 		window.googletag = window.googletag || {cmd: []}
 		googletag = window.googletag
-		if(googletag.apiReady) {
-			googletag.cmd.push(() => {
-				// eslint-disable-next-line react/prop-types
-				type ? displayEspecialAd() : displayCommonAd()
-			})
-		}
+		googletag.cmd.push(() => {
+			// eslint-disable-next-line react/prop-types
+			type ? displayEspecialAd() : displayCommonAd()
+		})
 	}, [])
 
 	useEffect(() => {
